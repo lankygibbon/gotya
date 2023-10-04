@@ -28,5 +28,10 @@
     "vite": "^4.4.2",
     "wrangler": "^3.10.1"
   },
-  "type": "module"
+  "type": "module",
+  "dependencies": {
+    "@picocss/pico": "^1.5.10",
+    "firebase": "^10.4.0",
+    "sveltefire": "^0.4.2"
+  }
 }
