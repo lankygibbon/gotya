@@ -8,4 +8,5 @@
 
 <Doc ref="rooms/{data.roomid}" let:data>
 	<h2>{data.name}</h2>
+	<h2>{data.roomCode}</h2>
 </Doc>
