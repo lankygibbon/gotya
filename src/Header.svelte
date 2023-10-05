@@ -5,7 +5,7 @@
 <nav>
 	<nav>
 		<ul>
-			<li><strong>Brand</strong></li>
+			<li><strong>Gotya Game</strong></li>
 		</ul>
 		<ul>
 			<li><a href="/">Home</a></li>
