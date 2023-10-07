@@ -1,10 +1,8 @@
 <script>
-	/** @type {import('./$types').LayoutData} */
-	export let data;
-
 	import { SignedIn, SignedOut, Doc, Collection } from 'sveltefire';
 	import { signInAnonymously } from 'firebase/auth';
 	import { getAuth, signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
+	import Auth from '$lib/components/Auth.svelte';
 	const gProvider = new GoogleAuthProvider();
 	const auth = getAuth();
 
@@ -43,3 +41,5 @@
 	<button on:click={() => signInAnonymously(auth)}>Sign In Anonymously</button>
 	<button on:click={() => googleSignIn()}>Sign In with Google</button>
 </SignedOut>
+
+<Auth />

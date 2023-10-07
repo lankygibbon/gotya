@@ -2,7 +2,7 @@
 	import { SignedIn, SignedOut } from 'sveltefire';
 </script>
 
-<nav>
+<div>
 	<nav>
 		<ul>
 			<li><strong>Gotya Game</strong></li>
@@ -14,4 +14,4 @@
 			<SignedIn><li><a href="/profile">Profile</a></li></SignedIn>
 		</ul>
 	</nav>
-</nav>
+</div>

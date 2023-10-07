@@ -1,6 +1,8 @@
-import {firestore} from '$lib/firebase'
+import {db} from '$lib/firebase'
 import { doc,collection, getDocs ,getDoc,addDoc} from 'firebase/firestore';
+import {auth} from '$lib/firebase';
 
+auth.currentUser?.uid;
 export const randomCode = () => {
   let code = '';
   const alpha = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
@@ -21,7 +23,7 @@ export const randomCode = () => {
 export const createRoom = async (runCount = 0) => {
     let code = randomCode();
     //let code = 'LV1245';
-    const docRef = doc(firestore, 'roomCodes', code);
+    const docRef = doc(db, 'roomCodes', code);
     const docSnap = await getDoc(docRef);
 
   if (docSnap.exists()) {
@@ -34,11 +36,12 @@ export const createRoom = async (runCount = 0) => {
       return "unsuccessful";
     }
   } else {
-      const newRoomCode = collection(firestore, "roomCodes");
+      const newRoomCode = collection(db, "roomCodes");
       
 
-    let newRoomRef = await addDoc(collection(firestore, "rooms"), {
-      roomCode: code});
+    let newRoomRef = await addDoc(collection(db, "rooms"), {
+      roomCode: code,
+    owner: auth.currentUser?.uid });
 
       let newRoomSnap = await getDoc(newRoomRef);
 
