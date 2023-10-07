@@ -6,21 +6,18 @@
 
 	import { authStore, authHandlers } from '$lib/stores/authStore';
 
-	let display_name = $authStore.currentUser.displayName;
-	let email = $authStore.currentUser.email;
-	let uid = $authStore.currentUser.uid;
+	import { goto } from '$app/navigation';
 
 	const signOut = () => {
 		authHandlers.logout();
+		goto('/');
 	};
 </script>
 
 <h2>My Profile</h2>
 
-{#if $authStore.currentUser}
-	<h1>{display_name}</h1>
-	<h4>{email}</h4>
-	<h4>{uid}</h4>
-{/if}
+<h1>{$authStore?.currentUser?.displayName}</h1>
+<h4>{$authStore?.currentUser?.email}</h4>
+<h4>{$authStore?.currentUser?.uid}</h4>
 
 <button on:click={signOut}>Sign Out</button>
