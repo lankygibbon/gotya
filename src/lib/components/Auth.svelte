@@ -1,7 +1,7 @@
 <script>
 	import { authHandlers, authStore } from '$lib/stores/authStore';
 	import { goto } from '$app/navigation';
-	let register = true;
+	let register = false;
 	/**
 	 * @type {string}
 	 */
@@ -53,6 +53,9 @@
 			</label>
 		{/if}
 		<button on:click={handlesubmit}>Submit</button>
+		{#if !register}
+			<button on:click={() => authHandlers.signInWithGoogle()}>Sign In with Google</button>
+		{/if}
 	</form>
 
 	{#if register}

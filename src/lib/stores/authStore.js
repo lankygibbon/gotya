@@ -1,6 +1,6 @@
 import { writable } from "svelte/store";
 import {auth} from '$lib/firebase';
-import { createUserWithEmailAndPassword, sendPasswordResetEmail, signInWithEmailAndPassword, signOut, updateEmail, updatePassword } from "firebase/auth";
+import { createUserWithEmailAndPassword, sendPasswordResetEmail, signInWithEmailAndPassword, signOut, updateEmail, updatePassword , GoogleAuthProvider, signInWithPopup} from "firebase/auth";
 
 
 export const authStore = writable({
@@ -34,6 +34,10 @@ export const authHandlers = {
         if(auth.currentUser != null){
             await updatePassword(auth.currentUser,password);
         }
+    },
+    signInWithGoogle: async () => {
+        let gProvider = new GoogleAuthProvider();
+        await signInWithPopup(auth, gProvider);
     }
 
 }

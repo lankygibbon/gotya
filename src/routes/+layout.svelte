@@ -7,6 +7,8 @@
 	import { authStore } from '$lib/stores/authStore';
 
 	import { app, db, auth, storage } from '$lib/firebase';
+	import { page } from '$app/stores';
+	import { goto } from '$app/navigation';
 
 	onMount(() => {
 		const unsubscribe = auth.onAuthStateChanged((user) => {
@@ -14,6 +16,12 @@
 			authStore.update((curr) => {
 				return { ...curr, isLoading: false, currentUser: user };
 			});
+
+			if (user === null) {
+				if ($page.route.id !== '/' && $page.route.id !== '/login') {
+					goto('/');
+				}
+			}
 		});
 	});
 </script>
