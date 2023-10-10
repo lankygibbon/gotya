@@ -16,12 +16,6 @@
 			authStore.update((curr) => {
 				return { ...curr, isLoading: false, currentUser: user };
 			});
-
-			if (user === null) {
-				if ($page.route.id !== '/' && $page.route.id !== '/login') {
-					goto('/');
-				}
-			}
 		});
 	});
 </script>

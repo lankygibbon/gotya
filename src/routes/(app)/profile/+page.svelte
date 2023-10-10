@@ -2,7 +2,7 @@
 	import { SignedIn, Doc } from 'sveltefire';
 
 	import { auth, setUsername } from '$lib/firebase';
-	import Profile from '../../Profile.svelte';
+	import Profile from '../../../Profile.svelte';
 
 	import { authStore, authHandlers } from '$lib/stores/authStore';
 
