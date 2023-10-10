@@ -4,10 +4,11 @@
 	import { collection, query, where } from 'firebase/firestore';
 	import { db } from '$lib/firebase';
 	import { goto } from '$app/navigation';
+	import { authStore } from '$lib/stores/authStore';
 
 	const q = query(
 		collection(db, 'rooms'),
-		where('members', 'array-contains', 'UmIA1sGj0FaXqbzhgfdjEUfyDWA2')
+		where('members', 'array-contains', $authStore.currentUser?.uid)
 	);
 </script>
 
