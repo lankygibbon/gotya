@@ -37,11 +37,13 @@ export const createRoom = async (runCount = 0) => {
     }
   } else {
       const newRoomCode = collection(db, "roomCodes");
-      
+      //TODO: Add room code to roomCodes collection
 
     let newRoomRef = await addDoc(collection(db, "rooms"), {
+      status: 'open',
       roomCode: code,
-    owner: auth.currentUser?.uid });
+    owner: auth.currentUser?.uid,
+  members:[auth.currentUser?.uid] });
 
       let newRoomSnap = await getDoc(newRoomRef);
 

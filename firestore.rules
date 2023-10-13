@@ -3,6 +3,10 @@ rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
 
+    function signedInOrPublic() {
+      return request.auth.uid != null;
+    }
+
     // This rule allows anyone with your Firestore database reference to view, edit,
     // and delete all data in your Firestore database. It is useful for getting
     // started, but it is configured to expire after 30 days because it
@@ -13,7 +17,36 @@ service cloud.firestore {
     // all client requests to your Firestore database will be denied until you Update
     // your rules
     match /{document=**} {
-      allow read, write: if request.time < timestamp.date(2023, 10, 30);
+      allow read, write: if false
     }
+
+    match /rooms/{room} {
+      allow create: if request.auth != null;
+      allow read: if request.auth.uid in resource.data.members;
+      allow update: if 
+        signedInOrPublic() && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['members'])
+        && (
+          (
+            //Allow update old data is same as new data.
+            false
+          ) ||
+          (
+            //if the user is adding their uid
+            resource.data.state == 'open' &&
+            request.resource.data.members.hasAll([request.auth.uid]) &&
+            !(request.auth.uid in resource.data.members) &&
+            request.resource.data.members.hasAll(resource.data.members) &&
+            request.resource.data.members.size() == resource.data.members.size() + 1
+          ) ||
+          (
+            //if the user is removing their uid
+            request.resource.data.diff(resource.data).members.hasOnly([request.auth.uid]) && 
+            !request.resource.data.members.hasAll([request.auth.uid]) &&
+            request.resource.data.members.size() == resource.data.members.size() - 1
+          )
+        );
+    }
+
+
   }
 }
