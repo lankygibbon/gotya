@@ -1,41 +1,71 @@
 import {
 	initializeTestEnvironment,
 	assertSucceeds,
-	assertFails
+	assertFails    
 } from '@firebase/rules-unit-testing';
-import { beforeAuthStateChanged } from 'firebase/auth';
 import { doc, getDoc, setDoc } from 'firebase/firestore';
 import * as assert from 'assert';
 
+
 const PROJECT_ID = 'gotya-150d8';
 
-let firebase;
+const myId = "user_abc";
+const myUserData = {uid:'User ABC',email: 'ABC@test.com'};
+const theirId = "user_xyz";
+const theirUserData = {uid:'User XYZ',email: 'XYZ@test.com'};
 
-const getFirebase = async () => {
-	return await initializeTestEnvironment({
-		projectId: PROJECT_ID,
-		firestore: { host: 'localhost', port: 8080 }
-	});
-};
+describe("Firestore Rules", () => {
+    let testEnv = null;
+    let myUser = null;
+    let theirUser = null;
+    let noUser = null;
 
-const getFirestore = (context) => {
-    return context.firestore();
-}
+    before(async () => {
+        testEnv = await initializeTestEnvironment({
+            projectId: PROJECT_ID,
+            firestore:{
+                host:"localhost",
+                port:8080,
+            }
+        });
 
-beforeEach(async () => {
-    firebase = await getFirebase();
-})
+        //clean datastore
+        await testEnv.clearFirestore();
 
-describe("App", () => {
-    it("Should be the case 2 + 2 = 4", async () => {
-        assertSucceeds(true);
+        //inital users
+        await testEnv.withSecurityRulesDisabled((context) => {
+            return context.firestore().collection('users').doc(myId).set(myUserData);
+        });
+        await testEnv.withSecurityRulesDisabled((context) =>{
+            return context.firestore().collection('users').doc(theirId).set(theirUserData);
+        });
+
     })
+
+    beforeEach(async ()=>{
+        myUser = testEnv.authenticatedContext(myId);
+        theirUser = testEnv.authenticatedContext(theirId);
+        noUser = testEnv.unauthenticatedContext();
+    })
+
+    
+
+    it("Users: Public user cannot read any user", async () => {
+        const doc = noUser.firestore().collection('users').doc(myId);
+        await assertFails(doc.get());
+    })
+
+    after(async () => {
+        await testEnv.cleanup();
+    })
+    
 })
+
 
 describe('Array', function () {
-    describe('#indexOf()', function () {
-      it('should return -1 when the value is not present', function () {
-        assert.equal([1, 2, 3].indexOf(4), -1);
-      });
+  describe('#indexOf()', function () {
+    it('should return -1 when the value is not present', function () {
+      assert.equal([1, 2, 3].indexOf(4), -1);
     });
   });
+});

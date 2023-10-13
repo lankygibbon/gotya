@@ -40,9 +40,10 @@ service cloud.firestore {
           ) ||
           (
             //if the user is removing their uid
-            request.resource.data.diff(resource.data).members.hasOnly([request.auth.uid]) && 
-            !request.resource.data.members.hasAll([request.auth.uid]) &&
-            request.resource.data.members.size() == resource.data.members.size() - 1
+            //request.resource.data.diff(resource.data).members.hasOnly([request.auth.uid]) && 
+            //!request.resource.data.members.hasAll([request.auth.uid]) &&
+            //request.resource.data.members.size() == resource.data.members.size() - 1
+            true
           )
         );
     }
