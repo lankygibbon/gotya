@@ -13,6 +13,7 @@ export const authStore = writable({
 })
 
 
+
 export const authHandlers = {
     login: async (/** @type {string} */ email,/** @type {string} */ password) =>{
         await signInWithEmailAndPassword(auth,email,password);
