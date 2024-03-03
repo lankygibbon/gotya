@@ -12,7 +12,8 @@
     "format": "prettier --plugin-search-dir . --write .",
     "firestore:test": "mocha ./test/security-rules.test.js",
     "pages:dev": "wrangler pages dev --compatibility-date=2023-10-04 --proxy 5173 -- npm run dev",
-    "pages:deploy": "npm run build && rm -rf ./functions/node_modules && wrangler pages deploy ./build && npm install --prefix ./functions/ ./functions/"
+    "pages:deploy": "npm run build && rm -rf ./functions/node_modules && wrangler pages deploy ./build && npm install --prefix ./functions/ ./functions/",
+    "pages:clear": "npm run build && rm -rf ./functions/node_modules && wrangler pages deploy ./holding && npm install --prefix ./functions/ ./functions/"
   },
   "devDependencies": {
     "@sveltejs/adapter-auto": "^2.0.0",
