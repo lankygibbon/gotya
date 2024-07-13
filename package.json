@@ -19,7 +19,7 @@
     "@sveltejs/adapter-auto": "^2.0.0",
     "@sveltejs/adapter-cloudflare": "^2.3.3",
     "@sveltejs/adapter-static": "^2.0.3",
-    "@sveltejs/kit": "^1.20.4",
+    "@sveltejs/kit": "^1.30.3",
     "eslint": "^8.28.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-svelte": "^2.30.0",
@@ -37,8 +37,17 @@
     "@firebase/rules-unit-testing": "^3.0.1",
     "@picocss/pico": "^1.5.10",
     "firebase": "^10.4.0",
+    "firebase-functions": "^5.0.1",
     "svelte-inline-input": "^1.2.1",
     "svelte-qrcode": "^1.0.0",
     "sveltefire": "^0.4.2"
+  },
+  "overrides": {
+    "sveltefire": {
+      "firebase": "^10.4.0"
+    }
+  },
+  "engines": {
+    "node": "22.x"
   }
 }
