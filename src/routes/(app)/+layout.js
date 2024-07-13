@@ -6,6 +6,6 @@ export const load = async () => {
 
     let authSt = get(authStore);
     if (!authSt.currentUser){
-    throw redirect(302, "/");
+    redirect(302, "/");
     }
 }
